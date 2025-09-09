@@ -2,7 +2,7 @@ import SearchForm from "../../components/SearchForm";
 import StartupCard, { StartupTypeCard } from "../../components/StartupCard";
 import { STARTUPS_QUERY } from "../../sanity/lib/queries";
 import { sanityFetch, SanityLive } from "../../sanity/lib/live";
-import { auth } from "../../../auth";
+import { auth } from "@/auth";
 
 export default async function Home({
   searchParams,
@@ -14,12 +14,13 @@ export default async function Home({
 
   const session = await auth();
 
-  console.log(session?.id);
+  console.log(session?.user?.id || session?.user?.email);
 
   const { data: posts } = await sanityFetch({ query: STARTUPS_QUERY, params });
 
   return (
     <>
+   
       <section className="pink_container">
         <h1 className="heading">
           Pitch Your Startup, <br />

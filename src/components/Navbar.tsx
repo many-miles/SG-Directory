@@ -35,7 +35,7 @@ const Navbar = async () => {
                 </button>
               </form>
 
-              <Link href={`/user/${session?.id}`}>
+              <Link href={`/user/${session?.user?.id || 'profile'}`}>
                 <Avatar className="size-10">
                   <AvatarImage
                     src={session?.user?.image || ""}
@@ -53,7 +53,7 @@ const Navbar = async () => {
                 await signIn("google");
               }}
             >
-              <button type="submit">Login</button>
+              <button type="submit" className="login">Login</button>
             </form>
           )}
         </div>
