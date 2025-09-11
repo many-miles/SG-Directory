@@ -1,94 +1,221 @@
 /* Import Tailwind v4 */
 @import "tailwindcss";
 
-/* Define global theme tokens (replaces tailwind.config for many cases) */
+
+/* Define global theme tokens (replaces tailwind.config for theme) */
 @theme {
   --radius: 0.5rem;
   --font-work-sans: "Work Sans", sans-serif;
+  
+  /* Custom colors */
+  --color-primary-100: #FFE8F0;
+  --color-primary: #EE2B69;
+  --color-secondary: #FBE843;
+  --color-black-100: #333333;
+  --color-black-200: #141413;
+  --color-black-300: #7D8087;
+  --color-black: #000000;
+  --color-white-100: #F7F7F7;
+  --color-white: #FFFFFF;
+  
+  /* Custom shadows */
+  --shadow-100: 2px 2px 0px 0px rgb(0, 0, 0);
+  --shadow-200: 2px 2px 0px 2px rgb(0, 0, 0);
+  --shadow-300: 2px 2px 0px 2px rgb(238, 43, 105);
+  
+  /* Custom screens */
+  --breakpoint-xs: 475px;
 }
 
 /* Custom utilities with @utility */
 @utility flex-between {
-  @apply flex justify-between items-center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 @utility text-30-extrabold {
-  @apply text-[30px] font-extrabold text-white;
+  font-size: 30px;
+  font-weight: 800;
+  color: white;
 }
 
 @utility text-30-bold {
-  @apply text-[30px] font-bold text-black;
+  font-size: 30px;
+  font-weight: 700;
+  color: black;
 }
 
 @utility text-30-semibold {
-  @apply font-semibold text-[30px] text-black;
+  font-weight: 600;
+  font-size: 30px;
+  color: black;
 }
 
 @utility text-26-semibold {
-  @apply font-semibold text-[26px] text-black;
+  font-weight: 600;
+  font-size: 26px;
+  color: black;
 }
 
 @utility text-24-black {
-  @apply text-[24px] font-black text-black;
+  font-size: 24px;
+  font-weight: 900;
+  color: black;
 }
 
 @utility text-20-medium {
-  @apply font-medium text-[20px] text-black;
+  font-weight: 500;
+  font-size: 20px;
+  color: black;
 }
 
 @utility text-16-medium {
-  @apply font-medium text-[16px] text-black;
+  font-weight: 500;
+  font-size: 16px;
+  color: black;
 }
 
 @utility text-14-normal {
-  @apply font-normal text-sm text-white/80;
+  font-weight: 400;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
 }
 
 @utility pink_container {
-  @apply w-full bg-primary min-h-[530px] pattern flex justify-center items-center flex-col py-10 px-6;
+  width: 100%;
+  background-color: var(--color-primary);
+  min-height: 530px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 2.5rem 1.5rem;
 }
 
 @utility tag {
-  @apply bg-secondary px-6 py-3 font-work-sans font-bold rounded-sm uppercase relative tag-tri;
+  background-color: var(--color-secondary);
+  padding: 0.75rem 1.5rem;
+  font-family: var(--font-work-sans);
+  font-weight: 700;
+  border-radius: 0.125rem;
+  text-transform: uppercase;
+  position: relative;
 }
 
 @utility heading {
-  @apply uppercase bg-black px-6 py-3 font-work-sans font-extrabold text-white sm:text-[54px] sm:leading-[64px] text-[36px] leading-[46px] max-w-5xl text-center my-5;
+  text-transform: uppercase;
+  background-color: black;
+  padding: 0.75rem 1.5rem;
+  font-family: var(--font-work-sans);
+  font-weight: 800;
+  color: white;
+  font-size: 36px;
+  line-height: 46px;
+  max-width: 80rem;
+  text-align: center;
+  margin: 1.25rem 0;
+}
+
+@media (min-width: 640px) {
+  .heading {
+    font-size: 54px;
+    line-height: 64px;
+  }
 }
 
 @utility sub-heading {
-  @apply font-medium text-[20px] text-white max-w-2xl text-center break-words;
+  font-weight: 500;
+  font-size: 20px;
+  color: white;
+  max-width: 42rem;
+  text-align: center;
+  word-break: break-words;
 }
 
 @utility section_container {
-  @apply px-6 py-10 max-w-7xl mx-auto;
+  padding: 2.5rem 1.5rem;
+  max-width: 80rem;
+  margin: 0 auto;
 }
 
 @utility card_grid {
-  @apply grid md:grid-cols-3 sm:grid-cols-2 gap-5;
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+@media (min-width: 768px) {
+  .card_grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 @utility card_grid-sm {
-  @apply grid sm:grid-cols-2 gap-5;
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: repeat(2, 1fr);
 }
 
-@utility no-result {
-  @apply text-black text-sm font-normal;
+@utility no-results {
+  color: black;
+  font-size: 14px;
+  font-weight: 400;
 }
 
 /* Profile */
 @utility profile_container {
-  @apply w-full pb-10 pt-20 px-6 max-w-7xl mx-auto lg:flex-row flex-col flex gap-10;
+  width: 100%;
+  padding-bottom: 2.5rem;
+  padding-top: 5rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  max-width: 80rem;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+@media (min-width: 1024px) {
+  .profile_container {
+    flex-direction: row;
+  }
 }
 
 @utility profile_card {
-  @apply w-80 px-6 pb-6 pt-20 flex flex-col justify-center items-center bg-primary border-[5px] border-black shadow-100 rounded-[30px] relative z-0 h-fit max-lg:w-full;
+  width: 20rem;
+  padding: 5rem 1.5rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-primary);
+  border: 5px solid black;
+  box-shadow: var(--shadow-100);
+  border-radius: 30px;
+  position: relative;
+  z-index: 0;
+  height: fit-content;
+}
+
+@media (max-width: 1023px) {
+  .profile_card {
+    width: 100%;
+  }
 }
 
 @utility profile_title {
-  @apply w-11/12 bg-white border-[5px] border-black rounded-[20px] px-5 py-3 absolute -top-9 shadow-100;
-  /* You’ll need to keep the before/after CSS manually below */
+  width: 91.666667%;
+  background-color: white;
+  border: 5px solid black;
+  border-radius: 20px;
+  padding: 0.75rem 1.25rem;
+  position: absolute;
+  top: -2.25rem;
+  box-shadow: var(--shadow-100);
 }
+
 .profile_title::after {
   content: '';
   position: absolute;
@@ -101,6 +228,7 @@
   height: 60px;
   z-index: -1;
 }
+
 .profile_title::before {
   content: '';
   position: absolute;
@@ -115,109 +243,268 @@
 }
 
 @utility profile_image {
-  @apply rounded-full object-cover border-[3px] border-black;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid black;
 }
 
 /* Divider & skeletons */
 @utility divider {
-  @apply border-dotted bg-zinc-400 max-w-4xl my-10 mx-auto;
+  border-style: dotted;
+  background-color: rgb(161, 161, 170);
+  max-width: 56rem;
+  margin: 2.5rem auto;
 }
 
 @utility view_skeleton {
-  @apply bg-zinc-400 h-10 w-24 rounded-lg fixed bottom-3 right-3;
+  background-color: rgb(161, 161, 170);
+  height: 2.5rem;
+  width: 6rem;
+  border-radius: 0.5rem;
+  position: fixed;
+  bottom: 0.75rem;
+  right: 0.75rem;
 }
 
 /* Navbar */
 @utility avatar {
-  @apply p-0 focus-visible:ring-0 bg-none rounded-full drop-shadow-md;
+  padding: 0;
+  border-radius: 50%;
+  filter: drop-shadow(0 4px 3px rgb(0 0 0 / 0.07)) drop-shadow(0 2px 2px rgb(0 0 0 / 0.06));
 }
 
 @utility dropdown-menu {
-  @apply w-56 border-[5px] border-black bg-white p-5 rounded-2xl;
+  width: 14rem;
+  border: 5px solid black;
+  background-color: white;
+  padding: 1.25rem;
+  border-radius: 1rem;
 }
 
 @utility login {
-  @apply border-[5px] py-4 border-black bg-white text-black relative shadow-100 font-work-sans font-medium hover:shadow-none transition-all duration-500;
+  border: 5px solid black;
+  padding: 1rem 0;
+  background-color: white;
+  color: black;
+  position: relative;
+  box-shadow: var(--shadow-100);
+  font-family: var(--font-work-sans);
+  font-weight: 500;
+  transition: all 0.5s;
+}
+
+.login:hover {
+  box-shadow: none;
 }
 
 /* Search form */
 @utility search-form {
-  @apply max-w-3xl w-full min-h-[80px] bg-white border-[5px] border-black rounded-[80px] text-[24px] mt-8 px-5 flex flex-row items-center gap-5;
+  max-width: 48rem;
+  width: 100%;
+  min-height: 80px;
+  background-color: white;
+  border: 5px solid black;
+  border-radius: 80px;
+  font-size: 24px;
+  margin-top: 2rem;
+  padding: 0 1.25rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1.25rem;
 }
 
 @utility search-input {
-  @apply flex-1 font-bold placeholder:font-semibold placeholder:text-black w-full h-auto outline-none;
+  flex: 1;
+  font-weight: 700;
+  width: 100%;
+  height: auto;
+  outline: none;
+}
+
+.search-input::placeholder {
+  font-weight: 600;
+  color: black;
 }
 
 @utility search-btn {
-  @apply size-[50px] rounded-full bg-black flex justify-center items-center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* Startup card */
 @utility startup-card {
-  @apply bg-white border-[5px] border-black py-6 px-5 rounded-[22px] shadow-200 hover:border-primary transition-all duration-500 hover:shadow-300 hover:bg-primary/10;
+  background-color: white;
+  border: 5px solid black;
+  padding: 1.5rem 1.25rem;
+  border-radius: 22px;
+  box-shadow: var(--shadow-200);
+  transition: all 0.5s;
+}
+
+.startup-card:hover {
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-300);
+  background-color: rgba(238, 43, 105, 0.1);
 }
 
 @utility startup-card_date {
-  @apply font-medium text-[16px] bg-primary/10 px-4 py-2 rounded-full group-hover:bg-white;
+  font-weight: 500;
+  font-size: 16px;
+  background-color: rgba(238, 43, 105, 0.1);
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+}
+
+.group:hover .startup-card_date {
+  background-color: white;
 }
 
 @utility startup-card_desc {
-  @apply font-normal text-[16px] line-clamp-2 my-3 text-black break-all;
+  font-weight: 400;
+  font-size: 16px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin: 0.75rem 0;
+  color: black;
+  word-break: break-all;
 }
 
 @utility startup-card_img {
-  @apply w-full h-[164px] rounded-[10px] object-cover;
+  width: 100%;
+  height: 164px;
+  border-radius: 10px;
+  object-fit: cover;
 }
 
 @utility startup-card_btn {
-  @apply rounded-full bg-black font-medium text-[16px] text-white px-5 py-3;
+  border-radius: 50px;
+  background-color: black;
+  font-weight: 500;
+  font-size: 16px;
+  color: white;
+  padding: 0.75rem 1.25rem;
 }
 
 @utility startup-card_skeleton {
-  @apply w-full h-96 rounded-[22px] bg-zinc-400;
+  width: 100%;
+  height: 24rem;
+  border-radius: 22px;
+  background-color: rgb(161, 161, 170);
 }
 
 /* Startup form */
 @utility startup-form {
-  @apply max-w-2xl mx-auto bg-white my-10 space-y-8 px-6;
+  max-width: 42rem;
+  margin: 2.5rem auto;
+  background-color: white;
+  padding: 0 1.5rem;
+}
+
+.startup-form > * + * {
+  margin-top: 2rem;
 }
 
 @utility startup-form_label {
-  @apply font-bold text-[18px] text-black uppercase;
+  font-weight: 700;
+  font-size: 18px;
+  color: black;
+  text-transform: uppercase;
 }
 
 @utility startup-form_input {
-  @apply border-[3px] border-black px-5 py-7 text-[18px] text-black font-semibold rounded-full mt-3 placeholder:text-black/50;
+  border: 3px solid black;
+  padding: 1.75rem 1.25rem;
+  font-size: 18px;
+  color: black;
+  font-weight: 600;
+  border-radius: 50px;
+  margin-top: 0.75rem;
+  width: 100%;
+}
+
+.startup-form_input::placeholder {
+  color: rgba(0, 0, 0, 0.5);
 }
 
 @utility startup-form_textarea {
-  @apply border-[3px] border-black p-5 text-[18px] text-black font-semibold rounded-[20px] mt-3 placeholder:text-black/50;
+  border: 3px solid black;
+  padding: 1.25rem;
+  font-size: 18px;
+  color: black;
+  font-weight: 600;
+  border-radius: 20px;
+  margin-top: 0.75rem;
+  width: 100%;
+}
+
+.startup-form_textarea::placeholder {
+  color: rgba(0, 0, 0, 0.5);
 }
 
 @utility startup-form_error {
-  @apply text-red-500 mt-2 ml-5;
+  color: rgb(239, 68, 68);
+  margin-top: 0.5rem;
+  margin-left: 1.25rem;
 }
 
 @utility startup-form_editor {
-  @apply mt-3 border-[3px] border-black text-[18px] text-black font-semibold placeholder:text-black/50;
+  margin-top: 0.75rem;
+  border: 3px solid black;
+  font-size: 18px;
+  color: black;
+  font-weight: 600;
+}
+
+.startup-form_editor::placeholder {
+  color: rgba(0, 0, 0, 0.5);
 }
 
 @utility startup-form_btn {
-  @apply bg-primary border-[4px] border-black rounded-full p-5 min-h-[70px] w-full font-bold text-[18px];
+  background-color: var(--color-primary);
+  border: 4px solid black;
+  border-radius: 50px;
+  padding: 1.25rem;
+  min-height: 70px;
+  width: 100%;
+  font-weight: 700;
+  font-size: 18px;
 }
 
 /* View */
 @utility view-container {
-  @apply flex justify-end items-center mt-5 fixed bottom-3 right-3;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 1.25rem;
+  position: fixed;
+  bottom: 0.75rem;
+  right: 0.75rem;
 }
 
 @utility view-text {
-  @apply font-medium text-[16px] bg-primary/10 px-4 py-2 rounded-lg capitalize;
+  font-weight: 500;
+  font-size: 16px;
+  background-color: rgba(238, 43, 105, 0.1);
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  text-transform: capitalize;
 }
 
 @utility category-tag {
-  @apply font-medium text-[16px] bg-primary/10 px-4 py-2 rounded-full;
+  font-weight: 500;
+  font-size: 16px;
+  background-color: rgba(238, 43, 105, 0.1);
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
 }
 
 /* Pattern background */
@@ -243,6 +530,7 @@
   border-top: 10px solid black;
   border-right: 10px solid transparent;
 }
+
 .tag-tri::after {
   content: '';
   position: absolute;
