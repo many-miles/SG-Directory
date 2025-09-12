@@ -21,7 +21,7 @@ export const experimental_ppr = true;
 const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
   const id = (await params).id;
 
-  const [post, { select: editorPosts }] = await Promise.all([
+  const [post, editorPicksData] = await Promise.all([
     client.fetch(STARTUP_BY_ID_QUERY, { id }),
     client.fetch(PLAYLIST_BY_SLUG_QUERY, {
       slug: "editor-picks-new",
@@ -29,6 +29,9 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
   ]);
 
   if (!post) return notFound();
+
+  // Safely access the select property with proper type checking
+  const editorPosts = editorPicksData?.select || [];
 
   const parsedContent = md.render(post?.pitch || "");
 
@@ -42,33 +45,37 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
       </section>
 
       <section className="section_container">
-        <img
-          src={post.image}
-          alt="thumbnail"
-          className="w-full h-auto rounded-xl"
-        />
+        {post.image && (
+          <img
+            src={post.image}
+            alt="thumbnail"
+            className="w-full h-auto rounded-xl"
+          />
+        )}
 
         <div className="space-y-5 mt-10 max-w-4xl mx-auto">
           <div className="flex-between gap-5">
-            <Link
-              href={`/user/${post.author?._id}`}
-              className="flex gap-2 items-center mb-3"
-            >
-              <Image
-                src={post.author.image}
-                alt="avatar"
-                width={64}
-                height={64}
-                className="rounded-full drop-shadow-lg"
-              />
+            {post.author && (
+              <Link
+                href={`/user/${post.author._id}`}
+                className="flex gap-2 items-center mb-3"
+              >
+                <Image
+                  src={post.author.image || "/default-avatar.png"}
+                  alt="avatar"
+                  width={64}
+                  height={64}
+                  className="rounded-full drop-shadow-lg"
+                />
 
-              <div>
-                <p className="text-20-medium">{post.author.name}</p>
-                <p className="text-16-medium !text-black-300">
-                  @{post.author.username}
-                </p>
-              </div>
-            </Link>
+                <div>
+                  <p className="text-20-medium">{post.author.name}</p>
+                  <p className="text-16-medium !text-black-300">
+                    @{post.author.username}
+                  </p>
+                </div>
+              </Link>
+            )}
 
             <p className="category-tag">{post.category}</p>
           </div>
@@ -91,8 +98,8 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
             <p className="text-30-semibold">Editor Picks</p>
 
             <ul className="mt-7 card_grid-sm">
-              {editorPosts.map((post: StartupTypeCard, i: number) => (
-                <StartupCard key={i} post={post} />
+              {editorPosts.map((post: any, i: number) => (
+                <StartupCard key={i} post={post as StartupTypeCard} />
               ))}
             </ul>
           </div>
