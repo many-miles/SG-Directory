@@ -69,9 +69,12 @@ export const AUTHOR_BY_ID_QUERY = defineQuery(`
 export const STARTUPS_BY_AUTHOR_QUERY =
   defineQuery(`*[_type == "startup" && author._ref == $id] | order(_createdAt desc) {
   _id, 
+  _type,
+  _createdAt,
+  _updatedAt,
+  _rev,
   title, 
   slug,
-  _createdAt,
   author -> {
     _id, name, image, bio
   }, 
