@@ -1,8 +1,8 @@
 import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
-import { AUTHOR_BY_GOOGLE_ID_QUERY } from "@/src/sanity/lib/queries";
-import { client } from "@/src/sanity/lib/client";
-import { writeClient } from "@/src/sanity/lib/write-client";
+import { AUTHOR_BY_GOOGLE_ID_QUERY } from "@/sanity/lib/queries";
+import { client } from "@/sanity/lib/client";
+import { writeClient } from "@/sanity/lib/write-client";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [Google],
