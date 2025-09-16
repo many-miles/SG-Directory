@@ -1,13 +1,13 @@
 import Ping from "../components/Ping";
 import { client } from "../sanity/lib/client";
-import { STARTUP_VIEWS_QUERY, type StartupViewsResult } from "../sanity/lib/queries";
+import { SERVICE_VIEWS_QUERY, type ServiceViewsResult } from "../sanity/lib/queries";
 import { writeClient } from "../sanity/lib/write-client";
 import { after } from "next/server";
 
 const View = async ({ id }: { id: string }) => {
   const { views: totalViews } = await client
   .withConfig({ useCdn: false })
-   .fetch<StartupViewsResult>(STARTUP_VIEWS_QUERY, { id });
+   .fetch<ServiceViewsResult>(SERVICE_VIEWS_QUERY, { id });
 
  after(async () => {
     try {

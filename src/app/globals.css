@@ -179,8 +179,8 @@ body {
   text-transform: uppercase;
 }
 
-/* Startup card skeleton */
-.startup-card_skeleton {
+/* Service card skeleton */
+.service-card_skeleton {
   height: 300px;
   border-radius: 22px;
 }
@@ -356,8 +356,8 @@ body {
   background-color: #333;
 }
 
-/* Startup card */
-.startup-card {
+/* Service card */
+.service-card {
   background-color: white;
   border: 5px solid black;
   padding: 1.75rem 1.5rem;
@@ -371,14 +371,14 @@ body {
   overflow: hidden;
 }
 
-.startup-card:hover {
+.service-card:hover {
   border-color: var(--color-primary);
   box-shadow: var(--shadow-300);
   background-color: rgba(238, 43, 105, 0.05);
   transform: translateY(-2px);
 }
 
-.startup-card_date {
+.service-card_date {
   font-weight: 500;
   font-size: 16px;
   background-color: rgba(238, 43, 105, 0.1);
@@ -386,11 +386,11 @@ body {
   border-radius: 50px;
 }
 
-.startup-card:hover .startup-card_date {
+.service-card:hover .service-card_date {
   background-color: white;
 }
 
-.startup-card_desc {
+.service-card_desc {
   font-weight: 400;
   font-size: 16px;
   display: -webkit-box;
@@ -403,14 +403,14 @@ body {
   word-break: break-all;
 }
 
-.startup-card_img {
+.service-card_img {
   width: 100%;
   height: 164px;
   border-radius: 10px;
   object-fit: cover;
 }
 
-.startup-card_btn {
+.service-card_btn {
   border-radius: 50px;
   background-color: black;
   font-weight: 500;
@@ -423,7 +423,7 @@ body {
   display: inline-block;
 }
 
-.startup-card_btn:hover {
+.service-card_btn:hover {
   background-color: #333;
 }
 

@@ -3,9 +3,10 @@ import { client } from "@/sanity/lib/client";
 import { AUTHOR_BY_ID_QUERY } from "@/sanity/lib/queries";
 import { notFound } from "next/navigation";
 import Image from "next/image";
-import UserStartups from "@/components/UserStartups";
+import UserServices from "@/components/UserServices";
 import { Suspense } from "react";
-import { StartupCardSkeleton } from "@/components/StartupCard";
+import { ServiceCardSkeleton } from "@/components/ServiceCard";
+
 
 export const experimental_ppr = true;
 
@@ -42,11 +43,11 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
 
         <div className="flex-1 flex flex-col gap-5 lg:-mt-5">
           <p className="text-30-bold">
-            {session?.user?.id === id ? "Your" : "All"} Startups
+            {session?.user?.id === id ? "Your" : "All"} Services
           </p>
           <ul className="card_grid-sm">
-            <Suspense fallback={<StartupCardSkeleton />}>
-              <UserStartups id={id} />
+            <Suspense fallback={<ServiceCardSkeleton />}>
+              <UserServices id={id} />
             </Suspense>
           </ul>
         </div>

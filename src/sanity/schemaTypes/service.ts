@@ -1,8 +1,8 @@
 import { defineField, defineType } from "sanity";
 
-export const startup = defineType({
-  name: "startup",
-  title: "Startup",
+export const service = defineType({
+  name: "service",
+  title: "Service",
   type: "document",
   fields: [
     defineField({
@@ -36,13 +36,18 @@ export const startup = defineType({
         Rule.min(1).max(20).required().error("Please enter a category"),
     }),
     defineField({
-      name: "image",
+      name: "link",
       type: "url",
-      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "pitch",
-      type: "markdown",
+      title: "Service Details",
+      type: "array",
+      of: [{ type: "block" }],
+    }),
+    defineField({
+      name: "image",
+      type: "string",
     }),
   ],
 });

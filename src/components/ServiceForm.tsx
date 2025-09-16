@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 import { createPitch } from "../lib/actions";
 import { toast } from "sonner";
 
-const StartupForm = () => {
+const ServiceForm = () => {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [pitch, setPitch] = useState("");
   const router = useRouter();
@@ -32,8 +32,8 @@ const StartupForm = () => {
       const result = await createPitch(prevState, formData, pitch);
 
       if (result.status === "SUCCESS") {
-        toast.success("Your startup pitch has been created successfully");
-        router.push(`/startup/${result._id}`);
+        toast.success("Your service pitch has been created successfully");
+        router.push(`/service/${result._id}`);
       }
 
       return result;
@@ -63,69 +63,69 @@ const StartupForm = () => {
   });
 
   return (
-    <form action={formAction} className="startup-form">
+    <form action={formAction} className="service-form">
       <div>
-        <label htmlFor="title" className="startup-form_label">
+        <label htmlFor="title" className="service-form_label">
           Title
         </label>
         <Input
           id="title"
           name="title"
-          className="startup-form_input"
+          className="service-form_input"
           required
-          placeholder="Startup Title"
+          placeholder="Service Title"
         />
-        {errors.title && <p className="startup-form_error">{errors.title}</p>}
+        {errors.title && <p className="service-form_error">{errors.title}</p>}
       </div>
 
       <div>
-        <label htmlFor="description" className="startup-form_label">
+        <label htmlFor="description" className="service-form_label">
           Description
         </label>
         <Textarea
           id="description"
           name="description"
-          className="startup-form_textarea"
+          className="service-form_textarea"
           required
-          placeholder="Startup Description"
+          placeholder="Service Description"
         />
         {errors.description && (
-          <p className="startup-form_error">{errors.description}</p>
+          <p className="service-form_error">{errors.description}</p>
         )}
       </div>
 
       <div>
-        <label htmlFor="category" className="startup-form_label">
+        <label htmlFor="category" className="service-form_label">
           Category
         </label>
         <Input
           id="category"
           name="category"
-          className="startup-form_input"
+          className="service-form_input"
           required
-          placeholder="Startup Category (Tech, Health, Education...)"
+          placeholder="Service Category (Tech, Health, Education...)"
         />
         {errors.category && (
-          <p className="startup-form_error">{errors.category}</p>
+          <p className="service-form_error">{errors.category}</p>
         )}
       </div>
 
       <div>
-        <label htmlFor="link" className="startup-form_label">
+        <label htmlFor="link" className="service-form_label">
           Image URL
         </label>
         <Input
           id="link"
           name="link"
-          className="startup-form_input"
+          className="service-form_input"
           required
-          placeholder="Startup Image URL"
+          placeholder="Service Image URL"
         />
-        {errors.link && <p className="startup-form_error">{errors.link}</p>}
+        {errors.link && <p className="service-form_error">{errors.link}</p>}
       </div>
 
       <div data-color-mode="light">
-        <label htmlFor="pitch" className="startup-form_label">
+        <label htmlFor="pitch" className="service-form_label">
           Pitch
         </label>
         <MDEditor
@@ -143,12 +143,12 @@ const StartupForm = () => {
             disallowedElements: ["style"],
           }}
         />
-        {errors.pitch && <p className="startup-form_error">{errors.pitch}</p>}
+        {errors.pitch && <p className="service-form_error">{errors.pitch}</p>}
       </div>
 
       <Button
         type="submit"
-        className="startup-form_btn text-white"
+        className="service-form_btn text-white"
         disabled={isPending}
       >
         {isPending ? "Submitting..." : "Submit Your Pitch"}
@@ -158,4 +158,4 @@ const StartupForm = () => {
   );
 };
 
-export default StartupForm;
+export default ServiceForm;
