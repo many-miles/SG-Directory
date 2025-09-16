@@ -14,7 +14,8 @@
   "packageManager": "npm@11.4.2",
   "overrides": {
     "react": "$react",
-    "react-dom": "$react-dom"
+    "react-dom": "$react-dom",
+    "next": "$next"
   },
   "dependencies": {
     "@radix-ui/react-avatar": "^1.1.10",
@@ -26,7 +27,7 @@
     "@radix-ui/react-toast": "^1.2.15",
     "@sanity/image-url": "^1.2.0",
     "@sanity/vision": "^4.6.1",
-    "@sentry/nextjs": "^10.10.0",
+    "@sentry/nextjs": "^10.11.0",
     "@tailwindcss/typography": "^0.5.16",
     "@types/markdown-it": "^14.1.2",
     "@uiw/react-md-editor": "^4.0.8",

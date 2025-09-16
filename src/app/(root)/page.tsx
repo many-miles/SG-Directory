@@ -20,14 +20,16 @@ export default async function Home({
 
   return (
     <>
-      <section className="pink_container">
-        <h1 className="heading">
-          Pitch Your Startup, <br />
-          Connect With Entrepreneurs
-        </h1>
+      <section className="pink_container relative overflow-hidden">
+        <div className="pattern absolute inset-0 opacity-20"></div>
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center"></div>
+          <h1 className="heading inline-block">
+            Pitch Your Startup, <br className="hidden sm:block" />
+            Connect With Entrepreneurs
+          </h1>
 
-        <p className="sub-heading !max-w-3xl">
-          Submit Ideas, Vote on Pitches, and Get Noticed in Virtual
+          <p className="sub-heading max-w-3xl mx-auto mt-6 text-white/90">
+            Submit Ideas, Vote on Pitches, and Get Noticed in Virtual
           Competitions.
         </p>
 
