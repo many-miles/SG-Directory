@@ -1,4 +1,4 @@
-import StartupForm from "../../../../components/ServiceForm";
+import ServiceForm from "../../../../components/ServiceForm";
 import { auth } from "../../../../../auth";
 import { redirect } from "next/navigation";
 

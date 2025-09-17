@@ -9,12 +9,10 @@ import { formatDate } from "../../../../lib/utils";
 import Link from "next/link";
 import Image from "next/image";
 
-import markdownit from "markdown-it";
+import { PortableText } from '@portabletext/react';
 import { Skeleton } from "../../../../components/ui/skeleton";
 import View from "../../../../components/View";
 import ServiceCard, { ServiceTypeCard } from "../../../../components/ServiceCard";
-
-const md = markdownit();
 
 export const experimental_ppr = true;
 
@@ -32,8 +30,6 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
 
   // Safely access the select property with proper type checking
   const editorPosts = editorPicksData?.select || [];
-
-  const parsedContent = md.render(post?.pitch || "");
 
   return (
     <>
@@ -81,11 +77,10 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
           </div>
 
           <h3 className="text-30-bold">Pitch Details</h3>
-          {parsedContent ? (
-            <article
-              className="prose max-w-4xl font-work-sans break-all"
-              dangerouslySetInnerHTML={{ __html: parsedContent }}
-            />
+          {post.pitch ? (
+            <article className="prose max-w-4xl font-work-sans break-all">
+              <PortableText value={post.pitch} />
+            </article>
           ) : (
             <p className="no-result">No details provided</p>
           )}
