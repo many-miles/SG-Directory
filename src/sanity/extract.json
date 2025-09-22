@@ -175,6 +175,171 @@
         },
         "optional": true
       },
+      "category": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "accommodation"
+            },
+            {
+              "type": "string",
+              "value": "surfing"
+            },
+            {
+              "type": "string",
+              "value": "tours"
+            },
+            {
+              "type": "string",
+              "value": "food"
+            },
+            {
+              "type": "string",
+              "value": "transport"
+            },
+            {
+              "type": "string",
+              "value": "home"
+            },
+            {
+              "type": "string",
+              "value": "beauty"
+            },
+            {
+              "type": "string",
+              "value": "events"
+            },
+            {
+              "type": "string",
+              "value": "other"
+            }
+          ]
+        },
+        "optional": true
+      },
+      "location": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "geopoint"
+        },
+        "optional": true
+      },
+      "serviceRadius": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "number"
+        },
+        "optional": true
+      },
+      "contactMethod": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "phone"
+            },
+            {
+              "type": "string",
+              "value": "whatsapp"
+            },
+            {
+              "type": "string",
+              "value": "email"
+            },
+            {
+              "type": "string",
+              "value": "person"
+            }
+          ]
+        },
+        "optional": true
+      },
+      "contactDetails": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "priceRange": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "free"
+            },
+            {
+              "type": "string",
+              "value": "budget"
+            },
+            {
+              "type": "string",
+              "value": "moderate"
+            },
+            {
+              "type": "string",
+              "value": "premium"
+            },
+            {
+              "type": "string",
+              "value": "luxury"
+            },
+            {
+              "type": "string",
+              "value": "quote"
+            }
+          ]
+        },
+        "optional": true
+      },
+      "availability": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "array",
+          "of": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "monday"
+              },
+              {
+                "type": "string",
+                "value": "tuesday"
+              },
+              {
+                "type": "string",
+                "value": "wednesday"
+              },
+              {
+                "type": "string",
+                "value": "thursday"
+              },
+              {
+                "type": "string",
+                "value": "friday"
+              },
+              {
+                "type": "string",
+                "value": "saturday"
+              },
+              {
+                "type": "string",
+                "value": "sunday"
+              }
+            ]
+          }
+        },
+        "optional": true
+      },
       "views": {
         "type": "objectAttribute",
         "value": {
@@ -189,14 +354,7 @@
         },
         "optional": true
       },
-      "category": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        },
-        "optional": true
-      },
-      "link": {
+      "image": {
         "type": "objectAttribute",
         "value": {
           "type": "string"
@@ -382,10 +540,17 @@
         },
         "optional": true
       },
-      "image": {
+      "isActive": {
         "type": "objectAttribute",
         "value": {
-          "type": "string"
+          "type": "boolean"
+        },
+        "optional": true
+      },
+      "featured": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "boolean"
         },
         "optional": true
       }

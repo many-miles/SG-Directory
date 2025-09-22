@@ -44,10 +44,16 @@ export type Service = {
     _weak?: boolean;
     [internalGroqTypeReferenceTo]?: "author";
   };
+  category?: "accommodation" | "surfing" | "tours" | "food" | "transport" | "home" | "beauty" | "events" | "other";
+  location?: Geopoint;
+  serviceRadius?: number;
+  contactMethod?: "phone" | "whatsapp" | "email" | "person";
+  contactDetails?: string;
+  priceRange?: "free" | "budget" | "moderate" | "premium" | "luxury" | "quote";
+  availability?: Array<"monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday" | "sunday">;
   views?: number;
   description?: string;
-  category?: string;
-  link?: string;
+  image?: string;
   pitch?: Array<{
     children?: Array<{
       marks?: Array<string>;
@@ -66,7 +72,8 @@ export type Service = {
     _type: "block";
     _key: string;
   }>;
-  image?: string;
+  isActive?: boolean;
+  featured?: boolean;
 };
 
 export type Author = {
@@ -205,40 +212,24 @@ export type SanityAssetSourceData = {
 
 export type AllSanitySchemaTypes = Playlist | Service | Author | Markdown | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
 export declare const internalGroqTypeReferenceTo: unique symbol;
+// Source: ./src/app/(root)/map/page.tsx
+// Variable: SERVICES_WITH_LOCATION_QUERY
+// Query: *[_type == "service" && defined(location) && isActive == true] | order(_createdAt desc) {    _id,    title,    category,    location,    priceRange,    author -> {      name    }  }
+export type SERVICES_WITH_LOCATION_QUERYResult = Array<{
+  _id: string;
+  title: string | null;
+  category: "accommodation" | "beauty" | "events" | "food" | "home" | "other" | "surfing" | "tours" | "transport" | null;
+  location: Geopoint | null;
+  priceRange: "budget" | "free" | "luxury" | "moderate" | "premium" | "quote" | null;
+  author: {
+    name: string | null;
+  } | null;
+}>;
+
 // Source: ./src/sanity/lib/queries.ts
 // Variable: SERVICES_QUERY
-// Query: *[_type == "service" && defined(slug.current) && !defined($search) || title match $search || category match $search || author->name match $search] | order(_createdAt desc) {  _id,   title,   slug,  _createdAt,  author -> {    _id, name, image, bio  },   views,  description,  category,  image,}
+// Query: *[_type == "service" && defined(slug.current) && isActive == true && (!defined($search) || title match $search || category match $search || author->name match $search) && (!defined($category) || category == $category)] | order(_createdAt desc) {  _id,   title,   slug,  _createdAt,  author -> {    _id, name, image, bio  },   views,  description,  category,  image,  location,  serviceRadius,  priceRange,  contactMethod,  availability,  featured}
 export type SERVICES_QUERYResult = Array<{
-  _id: string;
-  title: string | null;
-  slug: Slug | null;
-  _createdAt: string;
-  author: null;
-  views: null;
-  description: null;
-  category: null;
-  image: null;
-} | {
-  _id: string;
-  title: null;
-  slug: null;
-  _createdAt: string;
-  author: null;
-  views: null;
-  description: null;
-  category: null;
-  image: string | null;
-} | {
-  _id: string;
-  title: string | null;
-  slug: null;
-  _createdAt: string;
-  author: null;
-  views: null;
-  description: string | null;
-  category: null;
-  image: null;
-} | {
   _id: string;
   title: string | null;
   slug: Slug | null;
@@ -251,11 +242,17 @@ export type SERVICES_QUERYResult = Array<{
   } | null;
   views: number | null;
   description: string | null;
-  category: string | null;
+  category: "accommodation" | "beauty" | "events" | "food" | "home" | "other" | "surfing" | "tours" | "transport" | null;
   image: string | null;
+  location: Geopoint | null;
+  serviceRadius: number | null;
+  priceRange: "budget" | "free" | "luxury" | "moderate" | "premium" | "quote" | null;
+  contactMethod: "email" | "person" | "phone" | "whatsapp" | null;
+  availability: Array<"friday" | "monday" | "saturday" | "sunday" | "thursday" | "tuesday" | "wednesday"> | null;
+  featured: boolean | null;
 }>;
 // Variable: SERVICE_BY_ID_QUERY
-// Query: *[_type == "service" && _id == $id][0]{  _id,   title,   slug,  _createdAt,  author -> {    _id, name, username, image, bio  },   views,  description,  category,  image,  pitch,}
+// Query: *[_type == "service" && _id == $id][0]{  _id,   title,   slug,  _createdAt,  author -> {    _id, name, username, image, bio  },   views,  description,  category,  image,  location,  serviceRadius,  priceRange,  contactMethod,  contactDetails,  availability,  pitch,  isActive}
 export type SERVICE_BY_ID_QUERYResult = {
   _id: string;
   title: string | null;
@@ -270,8 +267,14 @@ export type SERVICE_BY_ID_QUERYResult = {
   } | null;
   views: number | null;
   description: string | null;
-  category: string | null;
+  category: "accommodation" | "beauty" | "events" | "food" | "home" | "other" | "surfing" | "tours" | "transport" | null;
   image: string | null;
+  location: Geopoint | null;
+  serviceRadius: number | null;
+  priceRange: "budget" | "free" | "luxury" | "moderate" | "premium" | "quote" | null;
+  contactMethod: "email" | "person" | "phone" | "whatsapp" | null;
+  contactDetails: string | null;
+  availability: Array<"friday" | "monday" | "saturday" | "sunday" | "thursday" | "tuesday" | "wednesday"> | null;
   pitch: Array<{
     children?: Array<{
       marks?: Array<string>;
@@ -290,7 +293,53 @@ export type SERVICE_BY_ID_QUERYResult = {
     _type: "block";
     _key: string;
   }> | null;
+  isActive: boolean | null;
 } | null;
+// Variable: SERVICES_BY_CATEGORY_QUERY
+// Query: *[_type == "service" && category == $category && isActive == true] | order(_createdAt desc) {  _id,   title,   slug,  _createdAt,  author -> {    _id, name, image, bio  },   views,  description,  category,  image,  location,  serviceRadius,  priceRange,  featured}
+export type SERVICES_BY_CATEGORY_QUERYResult = Array<{
+  _id: string;
+  title: string | null;
+  slug: Slug | null;
+  _createdAt: string;
+  author: {
+    _id: string;
+    name: string | null;
+    image: string | null;
+    bio: string | null;
+  } | null;
+  views: number | null;
+  description: string | null;
+  category: "accommodation" | "beauty" | "events" | "food" | "home" | "other" | "surfing" | "tours" | "transport" | null;
+  image: string | null;
+  location: Geopoint | null;
+  serviceRadius: number | null;
+  priceRange: "budget" | "free" | "luxury" | "moderate" | "premium" | "quote" | null;
+  featured: boolean | null;
+}>;
+// Variable: FEATURED_SERVICES_QUERY
+// Query: *[_type == "service" && featured == true && isActive == true] | order(_createdAt desc)[0...6] {  _id,   _type,  _updatedAt,  _rev,  title,   slug,  _createdAt,  author -> {    _id, name, image, bio  },   views,  description,  category,  image,  location,  priceRange}
+export type FEATURED_SERVICES_QUERYResult = Array<{
+  _id: string;
+  _type: "service";
+  _updatedAt: string;
+  _rev: string;
+  title: string | null;
+  slug: Slug | null;
+  _createdAt: string;
+  author: {
+    _id: string;
+    name: string | null;
+    image: string | null;
+    bio: string | null;
+  } | null;
+  views: number | null;
+  description: string | null;
+  category: "accommodation" | "beauty" | "events" | "food" | "home" | "other" | "surfing" | "tours" | "transport" | null;
+  image: string | null;
+  location: Geopoint | null;
+  priceRange: "budget" | "free" | "luxury" | "moderate" | "premium" | "quote" | null;
+}>;
 // Variable: SERVICE_VIEWS_QUERY
 // Query: *[_type == "service" && _id == $id][0]{        _id, views    }
 export type SERVICE_VIEWS_QUERYResult = {
@@ -320,7 +369,7 @@ export type AUTHOR_BY_ID_QUERYResult = {
   bio: string | null;
 } | null;
 // Variable: SERVICES_BY_AUTHOR_QUERY
-// Query: *[_type == "service" && author._ref == $id] | order(_createdAt desc) {  _id,   _type,  _createdAt,  _updatedAt,  _rev,  title,   slug,  author -> {    _id, name, image, bio  },   views,  description,  category,  image,}
+// Query: *[_type == "service" && author._ref == $id] | order(_createdAt desc) {  _id,   _type,  _createdAt,  _updatedAt,  _rev,  title,   slug,  author -> {    _id, name, image, bio  },   views,  description,  category,  image,  location,  priceRange,  isActive}
 export type SERVICES_BY_AUTHOR_QUERYResult = Array<{
   _id: string;
   _type: "service";
@@ -337,11 +386,14 @@ export type SERVICES_BY_AUTHOR_QUERYResult = Array<{
   } | null;
   views: number | null;
   description: string | null;
-  category: string | null;
+  category: "accommodation" | "beauty" | "events" | "food" | "home" | "other" | "surfing" | "tours" | "transport" | null;
   image: string | null;
+  location: Geopoint | null;
+  priceRange: "budget" | "free" | "luxury" | "moderate" | "premium" | "quote" | null;
+  isActive: boolean | null;
 }>;
 // Variable: PLAYLIST_BY_SLUG_QUERY
-// Query: *[_type == "playlist" && slug.current == $slug][0]{  _id,  title,  slug,  select[]->{    _id,    _createdAt,    title,    slug,    author->{      _id,      name,      slug,      image,      bio    },    views,    description,    category,    image,    pitch  }}
+// Query: *[_type == "playlist" && slug.current == $slug][0]{  _id,  title,  slug,  select[]->{    _id,    _createdAt,    title,    slug,    author->{      _id,      name,      slug,      image,      bio    },    views,    description,    category,    image,    location,    priceRange,    pitch  }}
 export type PLAYLIST_BY_SLUG_QUERYResult = {
   _id: string;
   title: string | null;
@@ -360,8 +412,10 @@ export type PLAYLIST_BY_SLUG_QUERYResult = {
     } | null;
     views: number | null;
     description: string | null;
-    category: string | null;
+    category: "accommodation" | "beauty" | "events" | "food" | "home" | "other" | "surfing" | "tours" | "transport" | null;
     image: string | null;
+    location: Geopoint | null;
+    priceRange: "budget" | "free" | "luxury" | "moderate" | "premium" | "quote" | null;
     pitch: Array<{
       children?: Array<{
         marks?: Array<string>;
@@ -387,12 +441,15 @@ export type PLAYLIST_BY_SLUG_QUERYResult = {
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "*[_type == \"service\" && defined(slug.current) && !defined($search) || title match $search || category match $search || author->name match $search] | order(_createdAt desc) {\n  _id, \n  title, \n  slug,\n  _createdAt,\n  author -> {\n    _id, name, image, bio\n  }, \n  views,\n  description,\n  category,\n  image,\n}": SERVICES_QUERYResult;
-    "*[_type == \"service\" && _id == $id][0]{\n  _id, \n  title, \n  slug,\n  _createdAt,\n  author -> {\n    _id, name, username, image, bio\n  }, \n  views,\n  description,\n  category,\n  image,\n  pitch,\n}": SERVICE_BY_ID_QUERYResult;
+    "\n  *[_type == \"service\" && defined(location) && isActive == true] | order(_createdAt desc) {\n    _id,\n    title,\n    category,\n    location,\n    priceRange,\n    author -> {\n      name\n    }\n  }\n": SERVICES_WITH_LOCATION_QUERYResult;
+    "*[_type == \"service\" && defined(slug.current) && isActive == true && (!defined($search) || title match $search || category match $search || author->name match $search) && (!defined($category) || category == $category)] | order(_createdAt desc) {\n  _id, \n  title, \n  slug,\n  _createdAt,\n  author -> {\n    _id, name, image, bio\n  }, \n  views,\n  description,\n  category,\n  image,\n  location,\n  serviceRadius,\n  priceRange,\n  contactMethod,\n  availability,\n  featured\n}": SERVICES_QUERYResult;
+    "*[_type == \"service\" && _id == $id][0]{\n  _id, \n  title, \n  slug,\n  _createdAt,\n  author -> {\n    _id, name, username, image, bio\n  }, \n  views,\n  description,\n  category,\n  image,\n  location,\n  serviceRadius,\n  priceRange,\n  contactMethod,\n  contactDetails,\n  availability,\n  pitch,\n  isActive\n}": SERVICE_BY_ID_QUERYResult;
+    "*[_type == \"service\" && category == $category && isActive == true] | order(_createdAt desc) {\n  _id, \n  title, \n  slug,\n  _createdAt,\n  author -> {\n    _id, name, image, bio\n  }, \n  views,\n  description,\n  category,\n  image,\n  location,\n  serviceRadius,\n  priceRange,\n  featured\n}": SERVICES_BY_CATEGORY_QUERYResult;
+    "*[_type == \"service\" && featured == true && isActive == true] | order(_createdAt desc)[0...6] {\n  _id, \n  _type,\n  _updatedAt,\n  _rev,\n  title, \n  slug,\n  _createdAt,\n  author -> {\n    _id, name, image, bio\n  }, \n  views,\n  description,\n  category,\n  image,\n  location,\n  priceRange\n}": FEATURED_SERVICES_QUERYResult;
     "\n    *[_type == \"service\" && _id == $id][0]{\n        _id, views\n    }\n": SERVICE_VIEWS_QUERYResult;
     "\n*[_type == \"author\" && id == $id][0]{\n    _id,\n    id,\n    name,\n    username,\n    email,\n    image,\n    bio\n}\n": AUTHOR_BY_GOOGLE_ID_QUERYResult;
     "\n*[_type == \"author\" && _id == $id][0]{\n    _id,\n    id,\n    name,\n    username,\n    email,\n    image,\n    bio\n}\n": AUTHOR_BY_ID_QUERYResult;
-    "*[_type == \"service\" && author._ref == $id] | order(_createdAt desc) {\n  _id, \n  _type,\n  _createdAt,\n  _updatedAt,\n  _rev,\n  title, \n  slug,\n  author -> {\n    _id, name, image, bio\n  }, \n  views,\n  description,\n  category,\n  image,\n}": SERVICES_BY_AUTHOR_QUERYResult;
-    "*[_type == \"playlist\" && slug.current == $slug][0]{\n  _id,\n  title,\n  slug,\n  select[]->{\n    _id,\n    _createdAt,\n    title,\n    slug,\n    author->{\n      _id,\n      name,\n      slug,\n      image,\n      bio\n    },\n    views,\n    description,\n    category,\n    image,\n    pitch\n  }\n}": PLAYLIST_BY_SLUG_QUERYResult;
+    "*[_type == \"service\" && author._ref == $id] | order(_createdAt desc) {\n  _id, \n  _type,\n  _createdAt,\n  _updatedAt,\n  _rev,\n  title, \n  slug,\n  author -> {\n    _id, name, image, bio\n  }, \n  views,\n  description,\n  category,\n  image,\n  location,\n  priceRange,\n  isActive\n}": SERVICES_BY_AUTHOR_QUERYResult;
+    "*[_type == \"playlist\" && slug.current == $slug][0]{\n  _id,\n  title,\n  slug,\n  select[]->{\n    _id,\n    _createdAt,\n    title,\n    slug,\n    author->{\n      _id,\n      name,\n      slug,\n      image,\n      bio\n    },\n    views,\n    description,\n    category,\n    image,\n    location,\n    priceRange,\n    pitch\n  }\n}": PLAYLIST_BY_SLUG_QUERYResult;
   }
 }

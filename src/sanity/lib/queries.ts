@@ -1,7 +1,8 @@
+// src/sanity/lib/queries.ts - Updated with new fields
 import { defineQuery } from "next-sanity";
 
 export const SERVICES_QUERY =
-  defineQuery(`*[_type == "service" && defined(slug.current) && !defined($search) || title match $search || category match $search || author->name match $search] | order(_createdAt desc) {
+  defineQuery(`*[_type == "service" && defined(slug.current) && isActive == true && (!defined($search) || title match $search || category match $search || author->name match $search) && (!defined($category) || category == $category)] | order(_createdAt desc) {
   _id, 
   title, 
   slug,
@@ -13,6 +14,12 @@ export const SERVICES_QUERY =
   description,
   category,
   image,
+  location,
+  serviceRadius,
+  priceRange,
+  contactMethod,
+  availability,
+  featured
 }`);
 
 export const SERVICE_BY_ID_QUERY =
@@ -28,7 +35,53 @@ export const SERVICE_BY_ID_QUERY =
   description,
   category,
   image,
+  location,
+  serviceRadius,
+  priceRange,
+  contactMethod,
+  contactDetails,
+  availability,
   pitch,
+  isActive
+}`);
+
+export const SERVICES_BY_CATEGORY_QUERY =
+  defineQuery(`*[_type == "service" && category == $category && isActive == true] | order(_createdAt desc) {
+  _id, 
+  title, 
+  slug,
+  _createdAt,
+  author -> {
+    _id, name, image, bio
+  }, 
+  views,
+  description,
+  category,
+  image,
+  location,
+  serviceRadius,
+  priceRange,
+  featured
+}`);
+
+export const FEATURED_SERVICES_QUERY =
+  defineQuery(`*[_type == "service" && featured == true && isActive == true] | order(_createdAt desc)[0...6] {
+  _id, 
+  _type,
+  _updatedAt,
+  _rev,
+  title, 
+  slug,
+  _createdAt,
+  author -> {
+    _id, name, image, bio
+  }, 
+  views,
+  description,
+  category,
+  image,
+  location,
+  priceRange
 }`);
 
 export type ServiceViewsResult = {
@@ -82,6 +135,9 @@ export const SERVICES_BY_AUTHOR_QUERY =
   description,
   category,
   image,
+  location,
+  priceRange,
+  isActive
 }`);
 
 export const PLAYLIST_BY_SLUG_QUERY =
@@ -105,6 +161,8 @@ export const PLAYLIST_BY_SLUG_QUERY =
     description,
     category,
     image,
+    location,
+    priceRange,
     pitch
   }
 }`);
