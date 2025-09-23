@@ -19,7 +19,7 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
 
   return (
     <>
-      <section className="profile_container">
+      <section className="profile_container flex flex-col lg:flex-row gap-10 lg:gap-16">
         <div className="profile_card">
           <div className="profile_title">
             <h3 className="text-24-black uppercase text-center line-clamp-1">
@@ -35,17 +35,17 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
             className="profile_image"
           />
 
-          <p className="text-30-extrabold mt-7 text-center">
+          <p className="text-30-bold mt-7 text-center">
             @{user?.username}
           </p>
-          <p className="mt-1 text-center text-14-normal">{user?.bio}</p>
+          <p className="mt-1 text-center text-24-black">{user?.bio}</p>
         </div>
 
-        <div className="flex-1 flex flex-col gap-5 lg:-mt-5">
-          <p className="text-30-bold">
+        <div className="flex-1 flex flex-col">
+          <p className="text-30-bold mb-4">
             {session?.user?.id === id ? "Your" : "All"} Services
           </p>
-          <ul className="card_grid-sm">
+          <ul className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             <Suspense fallback={<ServiceCardSkeleton />}>
               <UserServices id={id} />
             </Suspense>

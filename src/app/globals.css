@@ -3,7 +3,7 @@
 
 /* Define global theme tokens */
 @theme {
-  --radius: 0.5rem;
+  --radius: 2rem;
   --font-work-sans: "Work Sans", sans-serif;
   
   /* Custom colors */
@@ -26,13 +26,12 @@
   --breakpoint-xs: 475px;
 }
 
-/* Add to globals.css */
 .container {
   width: 100%;
   margin-left: auto;
   margin-right: auto;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  padding-left: 1rem 1rem;
+  padding-right: 1rem 1rem;
 }
 
 @media (min-width: 640px) {
@@ -55,8 +54,6 @@
 
 /* Base styles */
 * {
-  margin: 0;
-  padding: 0;
   box-sizing: border-box;
 }
 
@@ -161,14 +158,21 @@ body {
   }
 }
 
+.flex-1 {
+  min-width: 0; 
+}
+
 .profile_card {
   background-color: white;
   border: 5px solid black;
   border-radius: 22px;
-  padding: 2rem;
+  padding: 1.5rem;
+  flex-shrink: 0;
+  max-width: 400px;
+  width: 100%;
   box-shadow: var(--shadow-200);
   text-align: center;
-  min-width: 350px;
+  min-width: 0;
 }
 
 .profile_title {
@@ -194,8 +198,8 @@ body {
 /* Better category grid */
 .category-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
   gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
 }
 
 @media (min-width: 768px) {
@@ -293,6 +297,11 @@ body {
   overflow: hidden;
 }
 
+.filter-active {
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(238, 43, 105, 0.2);
+}
+
 /* Prose styles for pitch content */
 .prose {
   max-width: none;
@@ -384,8 +393,8 @@ body {
 }
 
 .small-heading {
-  font-weight: 120;
-  font-size: 20px;
+  font-weight: 500;
+  font-size: 15px;
   line-height: 1;
   color: white;
   padding: 1rem 2rem;
@@ -404,15 +413,16 @@ body {
 }
 
 .section_container {
-  padding: 2.5rem 1.5rem;
-  max-width: 80rem;
+  width: 100%;
+  max-width: 1200px;
   margin: 0 auto;
+  padding: 1rem 1rem;
 }
 
 .card_grid {
   display: grid;
-  gap: 1.25rem;
-  grid-template-columns: repeat(1, 1fr);
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
 }
 
 @media (min-width: 768px) {
@@ -461,7 +471,7 @@ body {
   background-color: white;
   border: 5px solid black;
   border-radius: 80px;
-  font-size: 24px;
+  font-size: 17px;
   margin: 0 auto;
   padding: 0 2rem;
   margin-top: 0.5rem;
@@ -475,6 +485,7 @@ body {
 @media (min-width: 640px) {
   .search-form {
     margin-top: 1rem;
+    font-size: 24px;
   }
 }
 

@@ -22,13 +22,18 @@ const LocationSearch = ({
 }: LocationSearchProps) => {
   const [isGettingLocation, setIsGettingLocation] = useState(false);
   const [locationError, setLocationError] = useState<string | null>(null);
+  const [showManualInput, setShowManualInput] = useState(false);
+  const [manualLat, setManualLat] = useState('-34.0489');
+  const [manualLng, setManualLng] = useState('24.9087');
 
   const handleGetLocation = async () => {
     setIsGettingLocation(true);
     setLocationError(null);
 
     try {
+      console.log('Attempting to get location...');
       const location = await getUserLocation();
+      console.log('Got location:', location);
       
       if (!isInJeffreysBay(location)) {
         toast.warning("You're outside Jeffreys Bay area. Showing all services.");
@@ -38,18 +43,37 @@ const LocationSearch = ({
       
       onLocationSet(location);
     } catch (error) {
+      console.error('Location error:', error);
       const errorMessage = error instanceof Error ? error.message : 'Unable to get location';
       setLocationError(errorMessage);
-      toast.error("Could not get your location. Please check your browser settings.");
+      toast.error("Could not get your location. Try manual entry below.");
+      setShowManualInput(true);
     } finally {
       setIsGettingLocation(false);
     }
+  };
+
+  const handleManualLocation = () => {
+    const lat = parseFloat(manualLat);
+    const lng = parseFloat(manualLng);
+    
+    if (isNaN(lat) || isNaN(lng)) {
+      toast.error("Please enter valid coordinates");
+      return;
+    }
+    
+    const location = { lat, lng };
+    onLocationSet(location);
+    toast.success("Manual location set!");
+    setShowManualInput(false);
+    setLocationError(null);
   };
 
   const handleClearLocation = () => {
     onLocationSet(null);
     onDistanceFilterChange(null);
     setLocationError(null);
+    setShowManualInput(false);
     toast.info("Location filter cleared");
   };
 
@@ -90,10 +114,63 @@ const LocationSearch = ({
           </Button>
 
           {locationError && (
-            <div className="text-red-600 text-sm bg-red-50 p-3 rounded">
+            <div className="text-red-600 text-sm bg-red-50 p-3 rounded border">
               <p><strong>Location Error:</strong> {locationError}</p>
-              <p className="mt-1">Try enabling location services and refreshing the page.</p>
+              <div className="mt-2 space-y-2">
+                <p className="text-xs">Quick fixes to try:</p>
+                <ul className="text-xs space-y-1 ml-4">
+                  <li>• Refresh the page and try again</li>
+                  <li>• Check if location is enabled in browser settings</li>
+                  <li>• Try using Chrome or Firefox</li>
+                  <li>• Use manual location entry below</li>
+                </ul>
+              </div>
             </div>
+          )}
+
+          {(locationError || showManualInput) && (
+            <div className="border-t pt-3 mt-3">
+              <p className="text-sm font-medium mb-2">Manual Location Entry:</p>
+              <div className="grid grid-cols-2 gap-2">
+                <input
+                  type="number"
+                  step="0.0001"
+                  value={manualLat}
+                  onChange={(e) => setManualLat(e.target.value)}
+                  placeholder="Latitude"
+                  className="p-2 border rounded text-sm"
+                />
+                <input
+                  type="number"
+                  step="0.0001"
+                  value={manualLng}
+                  onChange={(e) => setManualLng(e.target.value)}
+                  placeholder="Longitude"
+                  className="p-2 border rounded text-sm"
+                />
+              </div>
+              <Button 
+                onClick={handleManualLocation}
+                className="w-full mt-2 bg-gray-600 hover:bg-gray-700 text-white"
+                size="sm"
+              >
+                Use Manual Location
+              </Button>
+              <p className="text-xs text-gray-500 mt-1">
+                Default is Jeffreys Bay center (-34.0489, 24.9087)
+              </p>
+            </div>
+          )}
+
+          {!showManualInput && !locationError && (
+            <Button 
+              onClick={() => setShowManualInput(true)}
+              variant="outline"
+              className="w-full"
+              size="sm"
+            >
+              Or enter location manually
+            </Button>
           )}
         </div>
       ) : (

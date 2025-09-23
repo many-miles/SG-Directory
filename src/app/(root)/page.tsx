@@ -1,6 +1,7 @@
 // src/app/(root)/page.tsx - Updated for Jeffreys Bay theme
 import SearchForm from "@/components/SearchForm";
 import ServiceCard, { ServiceTypeCard } from "@/components/ServiceCard";
+import EnhancedServiceCard from "@/components/EnhancedServiceCard";
 import { SERVICES_QUERY, FEATURED_SERVICES_QUERY } from "@/sanity/lib/queries";
 import { sanityFetch, SanityLive } from "@/sanity/lib/live";
 import { auth } from "../../../auth";
@@ -37,7 +38,7 @@ export default async function Home({
           <SearchForm query={query} />
 
             <p className="small-heading !max-w-3xl mx-auto">
-              🌊 Serving the surfing capital of South Africa since 2024
+              Serving the surfing capital of South Africa since 2024
             </p>
         </div>
       </section>
@@ -45,16 +46,16 @@ export default async function Home({
       {/* Featured Services Section */}
       {featuredPosts?.length > 0 && !query && (
         <section className="section_container">
-          <div className="flex-between">
+          <div className="flex-between mt-4">
             <p className="text-30-semibold">Featured Services</p>
             <p className="text-16-medium text-black-300">
               Popular in Jeffreys Bay
             </p>
           </div>
 
-          <ul className="mt-7 card_grid">
+          <ul className="card_grid mt-4">
             {featuredPosts.map((post: ServiceTypeCard) => (
-              <ServiceCard key={post?._id} post={post} />
+              <EnhancedServiceCard key={post?._id} post={post} />
             ))}
           </ul>
         </section>
@@ -63,9 +64,9 @@ export default async function Home({
       {/* Categories Section */}
       {!query && (
         <section className="section_container service-section">
-          <p className="text-30-semibold mb-7">Browse by Category</p>
+          <p className="text-30-semibold">Browse by Category</p>
           
-          <div className="category-grid">
+          <div className="category-grid mt-4">
             {[
               { name: "Surfing Lessons", value: "surfing", emoji: "🏄‍♂️" },
               { name: "Accommodation", value: "accommodation", emoji: "🏠" },
@@ -90,32 +91,32 @@ export default async function Home({
       )}
 
       <section className="section_container">
-        <div className="flex-between mb-4">
+        <div className="flex flex-wrap items-center justify-between">
           <p className="text-30-semibold">
             {query ? `Search results for "${query}"` : 
              category ? `${category.charAt(0).toUpperCase() + category.slice(1)} Services` : 
              "All Services"}
           </p>
-          <div className="flex gap-3">
+          <div className="flex flex-wrap gap-2">
             <a 
               href="/near-me" 
-              className="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary/90 transition-colors flex items-center gap-2"
+              className="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary/90 transition-colors flex items-center"
             >
-              🎯 Near Me
+              Near Me
             </a>
             <a 
               href="/map" 
-              className="bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors flex items-center gap-2"
+              className="bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors flex items-center"
             >
-              📍 View Map
+              View Map
             </a>
           </div>
         </div>
 
-        <ul className="mt-7 card_grid">
+        <ul className="card_grid mt-4">
           {posts?.length > 0 ? (
             posts.map((post: any) => (
-              <ServiceCard key={post?._id} post={post as ServiceTypeCard} />
+              <EnhancedServiceCard key={post?._id} post={post as ServiceTypeCard} />
             ))
           ) : (
             <div className="col-span-full text-center py-12">

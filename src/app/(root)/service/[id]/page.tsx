@@ -56,7 +56,7 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
 
   return (
     <>
-      <section className="pink_container pattern!min-h-[230px]">
+      <section className="pink_container pattern !min-h-[230px]">
         <div className="flex items-center gap-2 mb-4">
           <p className="tag">{formatDate(post?._createdAt)}</p>
           {post.category && (
@@ -215,9 +215,9 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
 
         {editorPosts?.length > 0 && (
           <div className="max-w-4xl mx-auto">
-            <p className="text-30-semibold">Similar Services</p>
+            <p className="text-30-semibold mt-4">Similar Services</p>
 
-            <ul className="mt-7 card_grid-sm">
+            <ul className="mt-4 card_grid">
               {editorPosts.map((post: any, i: number) => (
                 <ServiceCard key={i} post={post as ServiceTypeCard} />
               ))}

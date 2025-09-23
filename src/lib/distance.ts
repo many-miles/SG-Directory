@@ -53,7 +53,7 @@ export function filterServicesByDistance(
     .sort((a, b) => (a.distance || 0) - (b.distance || 0));
 }
 
-// Get user's current location
+// Get user's current location with enhanced error handling
 export function getUserLocation(): Promise<Location> {
   return new Promise((resolve, reject) => {
     if (!navigator.geolocation) {
@@ -63,18 +63,37 @@ export function getUserLocation(): Promise<Location> {
 
     navigator.geolocation.getCurrentPosition(
       (position) => {
+        console.log('Location success:', position.coords);
         resolve({
           lat: position.coords.latitude,
           lng: position.coords.longitude
         });
       },
       (error) => {
-        reject(error);
+        console.error('Geolocation error:', error);
+        
+        let errorMessage = 'Location access denied';
+        switch (error.code) {
+          case error.PERMISSION_DENIED:
+            errorMessage = "Location access denied. Please enable location permissions for this site.";
+            break;
+          case error.POSITION_UNAVAILABLE:
+            errorMessage = "Location information unavailable. Check your GPS/network connection.";
+            break;
+          case error.TIMEOUT:
+            errorMessage = "Location request timed out. Please try again.";
+            break;
+          default:
+            errorMessage = `Location error: ${error.message}`;
+            break;
+        }
+        
+        reject(new Error(errorMessage));
       },
       {
-        enableHighAccuracy: true,
-        timeout: 10000,
-        maximumAge: 60000 // Cache for 1 minute
+        enableHighAccuracy: false, // Changed to false for better compatibility
+        timeout: 15000, // Increased timeout
+        maximumAge: 300000 // Cache for 5 minutes
       }
     );
   });

@@ -88,7 +88,7 @@ const LocationPicker = ({ onLocationSelect, initialLocation }: LocationPickerPro
         {position && (
           <p className="mt-1">
             Selected: {position[0].toFixed(4)}, {position[1].toFixed(4)}
-            {Math.abs(position[0] - (-34.0489)) < 0.1 && Math.abs(position[1] - 24.9087) < 0.1 
+            {Math.abs(position[0] - (-34.0489)) < 0.3 && Math.abs(position[1] - 24.9087) < 0.3 
               ? " (Jeffreys Bay area ✅)" 
               : " (Outside Jeffreys Bay ⚠️)"}
           </p>
